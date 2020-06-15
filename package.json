@@ -1,0 +1,22 @@
+{
+  "name": "three-webpack",
+  "version": "1.0.0",
+  "description": "three.js and webpack basic",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ShinKano <yushph@gmail.com> (https://qiita.com/ShinKano)",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "three": "^0.117.1"
+  }
+}
