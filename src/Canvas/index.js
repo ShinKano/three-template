@@ -7,7 +7,7 @@ export default class Canvas {
     this.h = window.innerHeight;
 
     // レンダラーを作成
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({ alpha: true });
     this.renderer.setSize(this.w, this.h);// 描画サイズ
     this.renderer.setPixelRatio(window.devicePixelRatio);// ピクセル比
 
@@ -38,9 +38,27 @@ export default class Canvas {
 
     // ジオメトリとマテリアルからメッシュを作成
     this.mesh = new THREE.Mesh(geo, mat);
+    // メッシュを回転させる
+    this.mesh.rotation.x = THREE.MathUtils.DEG2RAD * 25;
+    this.mesh.rotation.y = THREE.MathUtils.DEG2RAD * 45;
 
     // メッシュをシーンに追加
     this.scene.add(this.mesh);
+
+    // 画面に表示
+    this.renderer.render(this.scene, this.camera);
+    // アニメーション描画ループ開始
+    this.render();
+  }
+
+
+  render() {
+    // 次のフレームを要求
+    requestAnimationFrame(() => { this.render(); });
+
+    // ちょっとずつ回転させる
+  this.mesh.rotation.x += 0.01;
+  this.mesh.rotation.y += 0.01;
 
     // 画面に表示
     this.renderer.render(this.scene, this.camera);
