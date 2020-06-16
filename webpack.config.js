@@ -27,10 +27,9 @@ module.exports = {
         }
       },
       {
-        test: /\.(vert|frag|glsl)$/,
-        use: {
-          loader: 'webpack-glsl-loader'
-        }
+        test: /.(vert|frag)$/,
+        use: 'raw-loader',
+        exclude: /node_modules/
       }
     ]
   },

@@ -1,4 +1,7 @@
 import * as THREE from 'three';
+// シェーダーソース
+import vertexSource from './shaders/shader.vert';
+import fragmentSource from './shaders/shader.frag';
 
 export default class Canvas {
   constructor() {
@@ -40,17 +43,32 @@ export default class Canvas {
     // ライトをシーンに追加
     this.scene.add(this.light);
 
-    // 立方体のジオメトリを作成(幅, 高さ, 奥行き)
-    const geo = new THREE.BoxGeometry(300, 300, 300);
+    // ---------- 立方体のサンプル
+    // // 立方体のジオメトリを作成(幅, 高さ, 奥行き)
+    // const geo = new THREE.BoxGeometry(300, 300, 300);
 
-    // マテリアルを作成
-    const mat = new THREE.MeshLambertMaterial({ color: 0xffffff });
+    // // マテリアルを作成
+    // const mat = new THREE.MeshLambertMaterial({ color: 0xffffff });
 
-    // ジオメトリとマテリアルからメッシュを作成
+    // // ジオメトリとマテリアルからメッシュを作成
+    // this.mesh = new THREE.Mesh(geo, mat);
+    // // メッシュを回転させる
+    // this.mesh.rotation.x = THREE.MathUtils.DEG2RAD * 25;
+    // this.mesh.rotation.y = THREE.MathUtils.DEG2RAD * 45;
+
+
+    // ---------- 自作シェーダーのサンプル
+    // 平面をつくる（幅, 高さ, 横分割数, 縦分割数）
+    const geo = new THREE.PlaneGeometry(2, 2, 10, 10);
+
+    // シェーダーソースを渡してマテリアルを作成
+    const mat = new THREE.ShaderMaterial({
+      vertexShader: vertexSource,
+      fragmentShader: fragmentSource,
+      wireframe: true
+    });
+
     this.mesh = new THREE.Mesh(geo, mat);
-    // メッシュを回転させる
-    this.mesh.rotation.x = THREE.MathUtils.DEG2RAD * 25;
-    this.mesh.rotation.y = THREE.MathUtils.DEG2RAD * 45;
 
     // メッシュをシーンに追加
     this.scene.add(this.mesh);
