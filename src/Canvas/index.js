@@ -4,6 +4,8 @@ export default class Canvas {
   constructor() {
     // マウス座標
     this.mouse = new THREE.Vector2(0, 0);
+    // スクロール量
+    this.scrollY = 0;
     // ウィンドウサイズ
     this.w = window.innerWidth;
     this.h = window.innerHeight;
@@ -14,9 +16,8 @@ export default class Canvas {
     this.renderer.setPixelRatio(window.devicePixelRatio);// ピクセル比
 
     // #canvas-containerにレンダラーのcanvasを追加
-    // const container = document.getElementById("canvas-container");
-    // container.appendChild(this.renderer.domElement);
-    document.body.appendChild(this.renderer.domElement);
+    const container = document.getElementById("canvas-container");
+    container.appendChild(this.renderer.domElement);
 
 
     // ウィンドウサイズの平面がぴったり収まるカメラ距離（dist）を計算
@@ -34,7 +35,7 @@ export default class Canvas {
 
     // ライトを作成
     this.light = new THREE.PointLight(0x00ffff);
-    this.light.position.set(400, 400, 400);// ライトの位置を設定
+    this.light.position.set(0, 0, 400);// ライトの初期位置を設定
 
     // ライトをシーンに追加
     this.scene.add(this.light);
@@ -70,17 +71,31 @@ export default class Canvas {
     // 1秒で45°回転する
     this.mesh.rotation.x = sec * (Math.PI / 4);
     this.mesh.rotation.y = sec * (Math.PI / 4);
-    this.mesh.scale.x += 0.001;
+
+    // スクロール量より少なく動く
+    this.mesh.position.y = this.scrollY * 0.5;
 
     // 画面に表示
     this.renderer.render(this.scene, this.camera);
   }
+
+
+  // ---------- その他関数 ----------
 
   // マウス座標を取得
   // 画面の中心が原点（0, 0）なので、計算が必要
   mouseMoved(x, y) {
     this.mouse.x =  x - (this.w / 2);// 原点を中心に持ってくる
     this.mouse.y = -y + (this.h / 2);// 軸を反転して原点を中心に持ってくる
-    // console.log(this.mouse.y);
+
+    // ライトの xy座標 をマウス位置にする
+    this.light.position.x = this.mouse.x;
+    this.light.position.y = this.mouse.y;
+  }
+
+  // スクロール量を取得
+  scrolled(y) {
+    this.scrollY = y;
+    console.log(this.scrollY);
   }
 };

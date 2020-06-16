@@ -10,4 +10,9 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('mousemove', e => {
     canvas.mouseMoved(e.clientX, e.clientY);
   });
+
+  // スクロール量を取得
+  window.addEventListener('scroll', e => {
+    canvas.scrolled(window.scrollY);
+  });
 });
