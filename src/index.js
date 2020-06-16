@@ -3,6 +3,11 @@ import Canvas from './Canvas';
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  new Canvas();
+  // canvasを作成
+  const canvas = new Canvas();
   
+  // マウス座標を取得
+  window.addEventListener('mousemove', e => {
+    canvas.mouseMoved(e.clientX, e.clientY);
+  });
 });
