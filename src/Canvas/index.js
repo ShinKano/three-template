@@ -55,10 +55,12 @@ export default class Canvas {
   render() {
     // 次のフレームを要求
     requestAnimationFrame(() => { this.render(); });
+    // ミリ秒から秒に変換
+    const sec = performance.now() / 1000;
 
-    // ちょっとずつ回転させる
-  this.mesh.rotation.x += 0.01;
-  this.mesh.rotation.y += 0.01;
+    // 1秒で45°回転する
+    this.mesh.rotation.x = sec * (Math.PI / 4);
+    this.mesh.rotation.y = sec * (Math.PI / 4);
 
     // 画面に表示
     this.renderer.render(this.scene, this.camera);
